@@ -1,4 +1,4 @@
-package domain.User;
+package com.example.beat_api_sileo.domain.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class User {
 
     private String surname;
 
-    private String about;
+    private String description;
 
     private Date birthDate;
 

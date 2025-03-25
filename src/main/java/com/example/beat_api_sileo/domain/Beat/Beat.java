@@ -1,6 +1,6 @@
-package domain.Beat;
+package com.example.beat_api_sileo.domain.Beat;
 
-import domain.User.User;
+import com.example.beat_api_sileo.domain.User.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
