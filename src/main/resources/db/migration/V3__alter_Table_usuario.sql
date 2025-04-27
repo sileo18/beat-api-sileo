@@ -1,0 +1,1 @@
+ALTER TABLE usuario ALTER COLUMN pictureurl TYPE character varying(500);
