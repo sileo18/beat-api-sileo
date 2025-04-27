@@ -1,12 +1,23 @@
 package com.example.beat_api_sileo.config;
 
+import com.example.beat_api_sileo.domain.User.User;
+import com.example.beat_api_sileo.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -20,6 +31,12 @@ import java.util.List;
 @EnableMethodSecurity(prePostEnabled = true)
 public class Security {
 
+    @Autowired
+    private SecurityFilter securityFilter;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Bean
     public SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
@@ -29,6 +46,7 @@ public class Security {
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user/get").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -47,4 +65,15 @@ public class Security {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    @Bean
+    public PasswordEncoder PasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
 }
