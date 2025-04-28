@@ -20,15 +20,18 @@ public class Beat {
 
     private String name;
     private int BPM;
+    @Enumerated(EnumType.STRING)
     private Key key;
+    @Column(name = "image_url")
     private String imageUrl;
+    @Column(name = "audio_url")
     private String audioUrl;
 
 
     private String genre;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonBackReference
     private User user;
 
