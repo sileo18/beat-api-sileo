@@ -34,7 +34,8 @@ import java.util.List;
 public class Security {
 
 
-    //private final SecurityFilter securityFilter;
+    @Autowired
+    private  SecurityFilter securityFilter;
 
     @Autowired
     private UserRepository userRepository;
@@ -47,10 +48,9 @@ public class Security {
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/user/get").permitAll()
                         .anyRequest().authenticated()
                 )
-                //.addFilter()
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

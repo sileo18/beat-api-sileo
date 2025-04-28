@@ -7,6 +7,7 @@ import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
 import com.example.beat_api_sileo.domain.User.User;
 
 import com.example.beat_api_sileo.exceptions.EmailAlreadyExists;
+import com.example.beat_api_sileo.exceptions.UserNotFound;
 import com.example.beat_api_sileo.mapper.UserMapper;
 import com.example.beat_api_sileo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,29 +57,10 @@ public class UserService {
         return user;
     }
 
-/*    public LoginResponseDTO login(LoginRequestDTO loginRequest) {
-
-        String email = loginRequest.getEmail().trim();
-        String password = loginRequest.getPassword();
-
-        System.out.println("Attempting to login with email: " + email);
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFound("User not found"));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new InvalidCredentials("Invalid credentials");
-        }
-
-        String token = tokenService.generateToken(user);
-
-        return new LoginResponseDTO(token, user.getName(), user.getId());
-    }*/
-
     public User getUserByEmail(String email) {
 
         User user =(User) userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFound("User not found"));
 
         return user;
     }
