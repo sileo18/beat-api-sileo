@@ -1,88 +1,62 @@
 package com.example.beat_api_sileo.service;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.example.beat_api_sileo.config.TokenService;
-import com.example.beat_api_sileo.domain.Api.LoginRequestDTO;
-import com.example.beat_api_sileo.domain.Api.LoginResponseDTO;
+
+import com.example.beat_api_sileo.domain.Api.RegisterRequestDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
-import com.example.beat_api_sileo.domain.Roles.RoleEnum;
-import com.example.beat_api_sileo.domain.Roles.Roles;
-import com.example.beat_api_sileo.domain.User.UserRegisterDTO;
 import com.example.beat_api_sileo.domain.User.User;
-import com.example.beat_api_sileo.domain.UserRole.UserRole;
+
 import com.example.beat_api_sileo.exceptions.EmailAlreadyExists;
-import com.example.beat_api_sileo.exceptions.InvalidCredentials;
-import com.example.beat_api_sileo.exceptions.UserNotFound;
-import com.example.beat_api_sileo.repositories.RolesRepository;
+import com.example.beat_api_sileo.mapper.UserMapper;
 import com.example.beat_api_sileo.repositories.UserRepository;
-import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final S3Service amazonS3;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final TokenService tokenService;
 
     @Autowired
-    private RolesRepository rolesRepository;
-
-    @Autowired
-    private S3Service amazonS3;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @Transactional
-    public RegisterResponseDTO createUser(UserRegisterDTO data) {
+    public UserService(UserRepository userRepository, S3Service amazonS3, PasswordEncoder passwordEncoder, TokenService tokenService) {
+        this.userRepository = userRepository;
+        this.amazonS3 = amazonS3;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenService = tokenService;
+    }
+    public User register(RegisterRequestDTO data) {
 
         String imgUrl = "";
 
-        if (userRepository.existsByEmail(data.getEmail())) {
+        if (userRepository.existsByEmail(data.email())) {
             throw new EmailAlreadyExists("Email already exists");
         }
+        imgUrl = amazonS3.uploadFile(data.picture());
 
-        if(data.getProfilePictureUrl() != null) {
-            imgUrl = amazonS3.uploadFile(data.getProfilePictureUrl());
-        }
+        String encodedPassword = passwordEncoder.encode(data.password());
 
-        String encodedPassword = passwordEncoder.encode(data.getPassword());
+        User user = UserMapper.toUser(data);
 
-
-        User user = new User();
-        user.setName(data.getName());
-        user.setEmail(data.getEmail());
-        user.setPassword(encodedPassword);
-        user.setSurname(data.getSurname());
-        user.setDescription(data.getDescription());
-        user.setBirthDate(new Date(data.getBirthDate()));
         user.setProfilePictureUrl(imgUrl);
-
-        Roles role = rolesRepository.findByName(RoleEnum.ADMIN)
-                .orElseThrow(() -> new RuntimeException("Role não encontrada: " + RoleEnum.ADMIN));
-
-        Set<Roles> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
+        user.setPassword(encodedPassword);
 
         userRepository.save(user);
 
         String token = tokenService.generateToken(user);
 
-        return new RegisterResponseDTO(user, token);
+        return user;
     }
 
-    public LoginResponseDTO login(LoginRequestDTO loginRequest) {
+/*    public LoginResponseDTO login(LoginRequestDTO loginRequest) {
 
         String email = loginRequest.getEmail().trim();
         String password = loginRequest.getPassword();
@@ -99,11 +73,15 @@ public class UserService {
         String token = tokenService.generateToken(user);
 
         return new LoginResponseDTO(token, user.getName(), user.getId());
-    }
+    }*/
 
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
+
+        User user =(User) userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return user;
     }
+
 
 }

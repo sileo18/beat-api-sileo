@@ -1,21 +1,34 @@
     package com.example.beat_api_sileo.domain.User;
 
     import com.example.beat_api_sileo.domain.Beat.Beat;
-    import com.example.beat_api_sileo.domain.Roles.Roles;
     import com.fasterxml.jackson.annotation.JsonManagedReference;
     import jakarta.persistence.*;
     import jakarta.validation.constraints.Email;
     import lombok.AllArgsConstructor;
+    import lombok.Builder;
     import lombok.NoArgsConstructor;
+    import org.springframework.security.core.GrantedAuthority;
+    import org.springframework.security.core.userdetails.UserDetails;
+
 
     import java.util.*;
+
 
 
     @AllArgsConstructor
     @NoArgsConstructor
     @Entity
     @Table(name = "usuario")
-    public class User {
+    public class User implements UserDetails {
+
+        public static User create(String name, String surname, String email, String password) {
+            User user = new User();
+            user.setName(name);
+            user.setSurname(surname);
+            user.setEmail(email);
+            user.setPassword(password);
+            return user;
+        }
 
         @Id
         @GeneratedValue
@@ -42,13 +55,6 @@
         @JsonManagedReference
         private List<Beat> beats;
 
-        @ManyToMany(fetch = FetchType.EAGER)
-        @JoinTable(name = "usuario_roles",
-                joinColumns = @JoinColumn(name = "usuario_id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id"))
-        private Set<Roles> roles = new HashSet<>();
-
-
         public UUID getId() {
             return id;
         }
@@ -73,8 +79,38 @@
             this.email = email;
         }
 
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return null;
+        }
+
         public String getPassword() {
             return password;
+        }
+
+        @Override
+        public String getUsername() {
+            return null;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
         }
 
         public void setPassword(String password) {
@@ -113,10 +149,5 @@
             this.profilePictureUrl = profilePictureUrl;
         }
 
-        public void setRoles(Set<Roles> roles) {
-            this.roles = roles;
-        }
-        public Set<Roles> getRoles() {
-            return roles;
-        }
+
     }

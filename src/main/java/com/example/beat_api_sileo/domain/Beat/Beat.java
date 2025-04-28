@@ -23,10 +23,12 @@ public class Beat {
     private Key key;
     private String imageUrl;
     private String audioUrl;
+
+
     private String genre;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id") // FK Key
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @JsonBackReference
     private User user;
 

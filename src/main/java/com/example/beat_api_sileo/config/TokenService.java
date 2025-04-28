@@ -5,13 +5,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.beat_api_sileo.domain.User.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Service
+@Component
 public class TokenService {
 
     @Value("${jwt.secret}")
@@ -24,8 +25,9 @@ public class TokenService {
          String token = JWT.create()
                  .withIssuer("auth-with-jwt")
                  .withSubject(user.getEmail())
-                 .withClaim("id", user.getId().toString())
+                 .withClaim("userId", user.getId().toString())
                  .withExpiresAt(getExpirationDate())
+                 .withIssuedAt(Instant.now())
                     .sign(algorithm);
 
          return token;

@@ -2,6 +2,7 @@ package com.example.beat_api_sileo.config;
 
 import com.example.beat_api_sileo.domain.User.User;
 import com.example.beat_api_sileo.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,18 +30,18 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class Security {
 
-    @Autowired
-    private SecurityFilter securityFilter;
+
+    //private final SecurityFilter securityFilter;
 
     @Autowired
     private UserRepository userRepository;
 
     @Bean
     public SecurityFilterChain web(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        return http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(authorize -> authorize
@@ -48,23 +49,23 @@ public class Security {
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/get").permitAll()
                         .anyRequest().authenticated()
-                );
-
-        return http.build();
+                )
+                //.addFilter()
+                .build();
     }
 
-    @Bean
+    /*@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Permite requisições do frontend
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedH   eaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true); // Necessário se estiver enviando cookies ou headers de autenticação
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-    }
+    }*/
 
     @Bean
     public PasswordEncoder PasswordEncoder() {
