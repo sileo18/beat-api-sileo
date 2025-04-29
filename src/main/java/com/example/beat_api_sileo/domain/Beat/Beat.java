@@ -14,6 +14,15 @@ import java.util.UUID;
 @Table(name = "beats")
 public class Beat {
 
+    public static Beat create(String name, int BPM, Key key, String genre) {
+        Beat beat = new Beat();
+        beat.setName(name);
+        beat.setBPM(BPM);
+        beat.setKey(key);
+        beat.setGenre(genre);
+        return beat;
+    }
+
     @Id
     @GeneratedValue
     private UUID id;
