@@ -8,6 +8,7 @@ import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
 import com.example.beat_api_sileo.domain.User.User;
 import com.example.beat_api_sileo.mapper.UserMapper;
 import com.example.beat_api_sileo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<RegisterResponseDTO> registerUser(
+    public ResponseEntity<RegisterResponseDTO> registerUser(@Valid @ModelAttribute
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<LoginResponseDTO> loginUser(@Valid @ModelAttribute @RequestBody LoginRequestDTO loginRequest) {
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequest.email() , loginRequest.password());
 

@@ -6,12 +6,10 @@ import com.example.beat_api_sileo.domain.Beat.CreateBeatRequestDTO;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatResponseDTO;
 import com.example.beat_api_sileo.mapper.BeatMapper;
 import com.example.beat_api_sileo.service.BeatService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/beat")
@@ -24,12 +22,11 @@ public class BeatController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<CreateBeatResponseDTO> uploadBeat(CreateBeatRequestDTO createRequest) {
+    public ResponseEntity<CreateBeatResponseDTO> uploadBeat(@Valid @ModelAttribute CreateBeatRequestDTO createRequest) {
 
         Beat beatCreated = beatService.create(createRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(BeatMapper.toCreateBeatResponse(beatCreated));
+        return ResponseEntity.status(HttpStatus.CREATED).body(BeatMapper.toCreateBeatResponse(beatCreated));
 
     }
 
