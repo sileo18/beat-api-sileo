@@ -39,7 +39,7 @@ public class BeatService {
         User user = userRepository.findById(data.userId()).orElseThrow(() -> new UserNotFound("User not found"));
 
         beat.setName(data.name());
-        beat.setBPM(data.BPM());
+        beat.setBPM(data.bpm());
         beat.setKey(data.key());
         beat.setGenre(data.genre());
         beat.setImageUrl(imgUrl);

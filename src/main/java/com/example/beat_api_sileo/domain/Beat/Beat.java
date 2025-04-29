@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "beats")
 public class Beat {
 
-    public static Beat create(String name, int BPM, Key key, String genre) {
+    public static Beat create(String name, int BPM, Key key, Genre genre) {
         Beat beat = new Beat();
         beat.setName(name);
         beat.setBPM(BPM);
@@ -28,16 +28,19 @@ public class Beat {
     private UUID id;
 
     private String name;
-    private int BPM;
+
+    private int bpm;
+
     @Enumerated(EnumType.STRING)
     private Key key;
+
     @Column(name = "image_url")
     private String imageUrl;
     @Column(name = "audio_url")
     private String audioUrl;
 
 
-    private String genre;
+    private Genre genre;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -61,11 +64,11 @@ public class Beat {
     }
 
     public int getBPM() {
-        return BPM;
+        return bpm;
     }
 
     public void setBPM(int BPM) {
-        this.BPM = BPM;
+        this.bpm = BPM;
     }
 
     public Key getKey() {
@@ -92,11 +95,11 @@ public class Beat {
         this.audioUrl = audioUrl;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 

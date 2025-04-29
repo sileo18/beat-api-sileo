@@ -5,21 +5,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.UUID;
 
 public record CreateBeatRequestDTO(String name,
-                                   int BPM,
+                                   int bpm,
                                    Key key,
                                    MultipartFile image,
                                    MultipartFile audio,
-                                   String genre,
+                                   Genre genre,
                                    UUID userId) {
 
     public static CreateBeatRequestDTO create(String name,
-                                   int BPM,
+                                   int bpm,
                                    Key key,
                                    MultipartFile imageUrl,
                                    MultipartFile audioUrl,
-                                   String genre,
+                                              Genre genre,
                                    UUID userId) {
-        return new CreateBeatRequestDTO(name, BPM, key, imageUrl, audioUrl, genre, userId);
+        return new CreateBeatRequestDTO(name, bpm, key, imageUrl, audioUrl, genre, userId);
     }
 
 }
