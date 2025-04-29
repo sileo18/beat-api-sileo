@@ -4,12 +4,15 @@ package com.example.beat_api_sileo.controller;
 import com.example.beat_api_sileo.domain.Beat.Beat;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatRequestDTO;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatResponseDTO;
+import com.example.beat_api_sileo.domain.Beat.Genre;
 import com.example.beat_api_sileo.mapper.BeatMapper;
 import com.example.beat_api_sileo.service.BeatService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/beat")
@@ -28,6 +31,12 @@ public class BeatController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(BeatMapper.toCreateBeatResponse(beatCreated));
 
+    }
+
+    @GetMapping("/by-genre")
+    public ResponseEntity<List<Beat>> getBeatsByGenre(@RequestParam Genre genre) {
+        List<Beat> beats = beatService.getBeatsByGenre(genre);
+        return ResponseEntity.ok(beats);
     }
 
     @DeleteMapping("/delete")
