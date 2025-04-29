@@ -1,0 +1,2 @@
+ALTER TABLE beats
+DROP COLUMN key;

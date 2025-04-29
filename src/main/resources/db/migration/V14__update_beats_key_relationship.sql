@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS beats_key;
+
+ALTER TABLE beats
+ADD COLUMN key_id INTEGER;
+
+ALTER TABLE beats
+ADD CONSTRAINT fk_beats_key FOREIGN KEY (key_id) REFERENCES key(id);

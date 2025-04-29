@@ -2,10 +2,8 @@ package com.example.beat_api_sileo.service;
 
 import com.example.beat_api_sileo.domain.Beat.Beat;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatRequestDTO;
-import com.example.beat_api_sileo.domain.Beat.Genre;
 import com.example.beat_api_sileo.domain.User.User;
 import com.example.beat_api_sileo.exceptions.UserNotFound;
-import com.example.beat_api_sileo.mapper.BeatMapper;
 import com.example.beat_api_sileo.repositories.BeatRepository;
 import com.example.beat_api_sileo.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -27,7 +25,7 @@ public class BeatService {
         this.userRepository = userRepository;
     }
 
-    public Beat create(CreateBeatRequestDTO data) {
+    /*public Beat create(CreateBeatRequestDTO data) {
 
         String imgUrl = "";
 
@@ -56,5 +54,5 @@ public class BeatService {
 
     public List<Beat> getBeatsByGenre(Genre genre) {
         return beatRepository.findByGenre(genre);
-    }
+    }*/
 }

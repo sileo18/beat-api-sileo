@@ -1,11 +1,14 @@
 package com.example.beat_api_sileo.domain.Beat;
 
+import com.example.beat_api_sileo.domain.Genre.Genre;
+import com.example.beat_api_sileo.domain.Key.Key;
 import com.example.beat_api_sileo.domain.User.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +17,7 @@ import java.util.UUID;
 @Table(name = "beats")
 public class Beat {
 
-    public static Beat create(String name, int BPM, Key key, Genre genre) {
+    public static Beat create(String name, int BPM, Key key, List<Genre> genre) {
         Beat beat = new Beat();
         beat.setName(name);
         beat.setBPM(BPM);
@@ -31,16 +34,23 @@ public class Beat {
 
     private int bpm;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "key_id", referencedColumnName = "id")
+    @JsonBackReference
     private Key key;
 
     @Column(name = "image_url")
     private String imageUrl;
+
     @Column(name = "audio_url")
     private String audioUrl;
 
 
-    private Genre genre;
+    @ManyToMany
+    @JoinTable(name = "beat_genre",
+            joinColumns = @JoinColumn(name = "beat_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genre;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -95,12 +105,12 @@ public class Beat {
         this.audioUrl = audioUrl;
     }
 
-    public Genre getGenre() {
+    public List<Genre> getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
+    public void setGenre(List<Genre> genres) {
+        this.genre = genres;
     }
 
     public User getUser() {

@@ -1,5 +1,7 @@
 package com.example.beat_api_sileo.domain.Beat;
 
+import com.example.beat_api_sileo.domain.Genre.Genre;
+import com.example.beat_api_sileo.domain.Key.Key;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 

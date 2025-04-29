@@ -4,7 +4,6 @@ package com.example.beat_api_sileo.controller;
 import com.example.beat_api_sileo.domain.Beat.Beat;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatRequestDTO;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatResponseDTO;
-import com.example.beat_api_sileo.domain.Beat.Genre;
 import com.example.beat_api_sileo.mapper.BeatMapper;
 import com.example.beat_api_sileo.service.BeatService;
 import jakarta.validation.Valid;
@@ -24,7 +23,7 @@ public class BeatController {
         this.beatService = beatService;
     }
 
-    @PostMapping("/upload")
+    /*@PostMapping("/upload")
     public ResponseEntity<CreateBeatResponseDTO> uploadBeat(@Valid @ModelAttribute CreateBeatRequestDTO createRequest) {
 
         Beat beatCreated = beatService.create(createRequest);
@@ -37,7 +36,7 @@ public class BeatController {
     public ResponseEntity<List<Beat>> getBeatsByGenre(@RequestParam Genre genre) {
         List<Beat> beats = beatService.getBeatsByGenre(genre);
         return ResponseEntity.ok(beats);
-    }
+    }*/
 
     @DeleteMapping("/delete")
     public String deleteBeat() {
