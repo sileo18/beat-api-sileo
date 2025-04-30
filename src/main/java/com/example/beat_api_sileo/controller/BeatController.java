@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/beat")
+@RequestMapping("/api/beat")
 public class BeatController {
 
     private final BeatService beatService;

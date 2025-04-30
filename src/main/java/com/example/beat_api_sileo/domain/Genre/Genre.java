@@ -4,11 +4,22 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(name = "genre")
 public class Genre {
+
+    public Genre() {
+    }
+
+    public Genre(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    public Genre (String name) {
+        this.name = name;
+    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
