@@ -1,6 +1,6 @@
 # Beat API Sileo
 
-🌟 **Beat API Sileo** é uma aplicação que permite produtores de música gerenciar suas tracks de forma simples e eficiente. Os usuários podem criar contas, fazer login, e fazer o upload de suas músicas para uma plataforma pública. A API oferece autenticação JWT e armazenamento de arquivos na AWS, além de fornecer uma interface para visualizar as tracks mais recentes.
+🌟 **Beat API Sileo** é uma aplicação BaaS que permite produtores de música gerenciar suas tracks de forma simples e eficiente. Os usuários podem criar contas, fazer login, e fazer o upload de suas músicas para uma plataforma pública. A API oferece autenticação JWT e armazenamento de arquivos na AWS, além de fornecer uma interface para visualizar as tracks mais recentes.
 
 ---
 
