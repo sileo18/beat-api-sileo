@@ -4,11 +4,21 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(name = "key")
 public class Key {
+
+    public Key() {
+    }
+
+    public Key(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+    public Key (String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
