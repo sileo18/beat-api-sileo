@@ -28,13 +28,17 @@
 - 🆕 **Registro de Usuário**: Criação de conta com validação de dados (nome, e-mail, senha).
 - 🆕 **Autenticação JWT**: Login de usuários com autenticação utilizando JSON Web Tokens.
 - 📸 **Upload de Imagens**: Envio de imagens de perfil do usuário para AWS S3.
+- 🎤 **Registro de Tracks**: Registro de tracks com metadados (título, artista, gênero).
+- 🛠️ **Filtros de Exibição**: Adicionar filtros para pesquisa e visualização de tracks (por gênero, bpm, data, etc).
+- 🔒 **Controle de Acesso**: Proteção de endpoints com autenticação JWT.
+- 🔄 **Atualização de Dados**: Permite que os usuários atualizem suas informações pessoais.
+
 
 ---
 
 ## 🚀 Funcionalidades há Implementar
 
 - 🆕 **Cadastro de Tracks**: Implementar o registro detalhado das tracks, incluindo metadados como título, artista, e gênero.
-- 🛠️ **Filtros de Exibição**: Adicionar filtros para pesquisa e visualização de tracks (por gênero, data, popularidade, etc).
 - 🐳 **Dockerização Completa**: Completar a aplicação com Docker para facilitar a implantação.
 - 🔐 **Controle de Acesso e Permissões**: Implementar diferentes níveis de acesso para usuários (produtores, administradores, etc.).
 - 🛠️ **Documentação**: Documentar endpoint's através do swagger.
