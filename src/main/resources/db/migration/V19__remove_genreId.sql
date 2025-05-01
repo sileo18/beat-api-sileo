@@ -1,0 +1,1 @@
+ALTER TABLE beats DROP COLUMN genre_id;
