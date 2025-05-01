@@ -73,7 +73,7 @@ public class BeatService {
         return beatRepository.findByUserId(userId);
     }
 
-    /*public List<Beat> getBeatsByGenres(List<Long> genreIds) {
-        return BeatRepository.findBeatsByGenreIds(genreIds);
-    }*/
+    public List<Beat> getBeatsByBPMInterval(int minBPM, int maxBPM) {
+        return beatRepository.findBeatsByBPMRange(minBPM, maxBPM);
+    }
 }

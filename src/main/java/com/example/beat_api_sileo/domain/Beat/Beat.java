@@ -30,6 +30,7 @@ public class Beat {
 
     private String name;
 
+    @Column(name = "bpm")
     private int bpm;
 
     @ManyToOne

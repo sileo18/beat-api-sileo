@@ -47,6 +47,12 @@ public class BeatController {
         return ResponseEntity.ok(beats);
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<List<Beat>> getByBpmInterval(@RequestParam  int minBPM,@RequestParam int maxBPM) {
+        List<Beat> beats = beatService.getBeatsByBPMInterval(minBPM, maxBPM);
+        return ResponseEntity.ok(beats);
+    }
+
 
     /*@GetMapping("/by-genres")
     public ResponseEntity<List<Beat>> getBeatsByGenres(@RequestParam List<Long> genreIds) {

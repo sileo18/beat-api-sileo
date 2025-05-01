@@ -19,4 +19,6 @@ public interface BeatRepository extends JpaRepository<Beat, UUID> {
 
     List<Beat> findByUserId(UUID userId);
 
+    @Query("SELECT b FROM Beat b WHERE b.bpm BETWEEN :minBPM AND :maxBPM")
+    List<Beat> findBeatsByBPMRange(@Param("minBPM") int minBPM, @Param("maxBPM") int maxBPM);
 }
