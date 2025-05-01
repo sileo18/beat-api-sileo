@@ -17,12 +17,10 @@ import java.util.UUID;
 @Table(name = "beats")
 public class Beat {
 
-    public static Beat create(String name, int BPM, Key key, List<Genre> genre) {
+    public static Beat create(String name, int BPM) {
         Beat beat = new Beat();
         beat.setName(name);
         beat.setBPM(BPM);
-        beat.setKey(key);
-        beat.setGenre(genre);
         return beat;
     }
 
@@ -47,8 +45,8 @@ public class Beat {
 
 
     @ManyToMany
-    @JoinTable(name = "beat_genre",
-            joinColumns = @JoinColumn(name = "beat_id"),
+    @JoinTable(name = "beats_genre",
+            joinColumns = @JoinColumn(name = "beats_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genre;
 

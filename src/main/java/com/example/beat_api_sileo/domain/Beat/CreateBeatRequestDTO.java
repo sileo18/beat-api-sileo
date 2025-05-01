@@ -5,6 +5,7 @@ import com.example.beat_api_sileo.domain.Key.Key;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 public record CreateBeatRequestDTO(
@@ -15,7 +16,10 @@ public record CreateBeatRequestDTO(
         int bpm,
 
         @NotNull(message = "Key cannot be null")
-        Key key,
+        Long keyId,
+
+        @NotNull(message = "Genre ID cannot be null")
+        List<Long> genresId,
 
         @NotNull(message = "Image file is required")
         MultipartFile image,
@@ -23,19 +27,25 @@ public record CreateBeatRequestDTO(
         @NotNull(message = "Audio file is required")
         MultipartFile audio,
 
-        @NotNull(message = "Genre cannot be null")
-        Genre genre,
-
         @NotNull(message = "User ID cannot be null")
         UUID userId
 ) {
     public static CreateBeatRequestDTO create(String name,
                                               int bpm,
-                                              Key key,
+                                              Long keyId,
+                                              List<Long> genresId,
                                               MultipartFile imageUrl,
                                               MultipartFile audioUrl,
-                                              Genre genre,
-                                              UUID userId) {
-        return new CreateBeatRequestDTO(name, bpm, key, imageUrl, audioUrl, genre, userId);
+                                              UUID userId
+                                              ) {
+        return new CreateBeatRequestDTO(
+                name,
+                bpm,
+                keyId,
+                genresId,
+                imageUrl,
+                audioUrl,
+                userId
+        );
     }
 }

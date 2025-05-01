@@ -8,14 +8,12 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class BeatMapper {
 
-    /*public static Beat toBeat(CreateBeatRequestDTO request) {
+    public static Beat toBeat(CreateBeatRequestDTO request) {
         return Beat.create(
                 request.name(),
-                request.BPM(),
-                request.key(),
-                request.genre()
+                request.bpm()
         );
-    }*/
+    }
 
     public static CreateBeatResponseDTO toCreateBeatResponse(Beat beat) {
         return CreateBeatResponseDTO.create(

@@ -5,13 +5,16 @@ import com.example.beat_api_sileo.domain.Beat.Beat;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatRequestDTO;
 import com.example.beat_api_sileo.domain.Beat.CreateBeatResponseDTO;
 import com.example.beat_api_sileo.mapper.BeatMapper;
+import com.example.beat_api_sileo.repositories.BeatRepository;
 import com.example.beat_api_sileo.service.BeatService;
+import com.example.beat_api_sileo.service.GenreService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/beat")
@@ -19,11 +22,17 @@ public class BeatController {
 
     private final BeatService beatService;
 
-    public BeatController(BeatService beatService) {
+    private final GenreService genreService;
+
+    private final BeatRepository beatRepository;
+
+    public BeatController(BeatService beatService, GenreService genreService, BeatRepository beatRepository) {
         this.beatService = beatService;
+        this.genreService = genreService;
+        this.beatRepository = beatRepository;
     }
 
-    /*@PostMapping("/upload")
+    @PostMapping("/upload")
     public ResponseEntity<CreateBeatResponseDTO> uploadBeat(@Valid @ModelAttribute CreateBeatRequestDTO createRequest) {
 
         Beat beatCreated = beatService.create(createRequest);
@@ -32,9 +41,16 @@ public class BeatController {
 
     }
 
-    @GetMapping("/by-genre")
-    public ResponseEntity<List<Beat>> getBeatsByGenre(@RequestParam Genre genre) {
-        List<Beat> beats = beatService.getBeatsByGenre(genre);
+    @GetMapping("/get/user/{userId}")
+    public ResponseEntity<List<Beat>> getBeatsByUserId(@PathVariable UUID userId) {
+        List<Beat> beats = beatService.getBeatsByUserId(userId);
+        return ResponseEntity.ok(beats);
+    }
+
+
+    /*@GetMapping("/by-genres")
+    public ResponseEntity<List<Beat>> getBeatsByGenres(@RequestParam List<Long> genreIds) {
+        List<Beat> beats = beatService.getBeatsByGenres(genreIds);
         return ResponseEntity.ok(beats);
     }*/
 
