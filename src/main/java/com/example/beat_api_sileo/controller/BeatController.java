@@ -41,13 +41,13 @@ public class BeatController {
 
     }
 
-    @GetMapping("/get/user/{userId}")
+    @GetMapping("/get/{userId}")
     public ResponseEntity<List<Beat>> getBeatsByUserId(@PathVariable UUID userId) {
         List<Beat> beats = beatService.getBeatsByUserId(userId);
         return ResponseEntity.ok(beats);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/get/bpm")
     public ResponseEntity<List<Beat>> getByBpmInterval(@RequestParam  int minBPM,@RequestParam int maxBPM) {
         List<Beat> beats = beatService.getBeatsByBPMInterval(minBPM, maxBPM);
         return ResponseEntity.ok(beats);
@@ -55,14 +55,14 @@ public class BeatController {
 
 
     @GetMapping("/get/most-recent")
-    public ResponseEntity<List<Beat>> getMostRecent() {
-        List<Beat> mostRecentBeats = beatService.getMostRecent();
+    public ResponseEntity<List<Beat>> getMostRecent(@RequestParam int page,@RequestParam int size) {
+        List<Beat> mostRecentBeats = beatService.getMostRecent(page, size);
 
         return ResponseEntity.ok(mostRecentBeats);
     }
 
 
-    @GetMapping("/by-genres")
+    @GetMapping("/get/genres")
     public ResponseEntity<List<Beat>> getBeatsByGenres(@RequestParam List<Long> genreIds) {
         List<Beat> beats = beatService.getBeatsByGenres(genreIds);
         return ResponseEntity.ok(beats);

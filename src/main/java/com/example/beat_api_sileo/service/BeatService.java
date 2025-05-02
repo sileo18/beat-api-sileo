@@ -8,6 +8,8 @@ import com.example.beat_api_sileo.domain.User.User;
 import com.example.beat_api_sileo.exceptions.UserNotFound;
 import com.example.beat_api_sileo.repositories.BeatRepository;
 import com.example.beat_api_sileo.repositories.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,8 +71,11 @@ public class BeatService {
         return beat;
     }
 
-    public List<Beat> getMostRecent() {
-        return beatRepository.findMostRecent();
+    public List<Beat> getMostRecent(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return beatRepository.findMostRecent(pageable);
     }
 
     public List<Beat> getBeatsByUserId(UUID userId) {

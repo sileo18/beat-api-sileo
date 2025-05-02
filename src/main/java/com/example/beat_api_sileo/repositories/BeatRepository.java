@@ -13,8 +13,8 @@ import java.util.UUID;
 public interface BeatRepository extends JpaRepository<Beat, UUID> {
 
 
-    @Query("SELECT b from Beat b ORDER BY b.createdAt DESC")
-    List<Beat> findMostRecent();
+    @Query("SELECT b FROM Beat b ORDER BY b.createdAt DESC")
+    List<Beat> findMostRecent(org.springframework.data.domain.Pageable pageable);
 
     @Override
     Optional<Beat> findById(UUID uuid);
