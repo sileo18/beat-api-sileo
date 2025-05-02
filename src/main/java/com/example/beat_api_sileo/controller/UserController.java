@@ -8,6 +8,8 @@ import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
 import com.example.beat_api_sileo.domain.User.User;
 import com.example.beat_api_sileo.mapper.UserMapper;
 import com.example.beat_api_sileo.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/user")
+@Tag(name = "User Controller", description = "Gerencia operações relacionadas a User")
 public class UserController {
 
     private final UserService userService;
@@ -36,6 +39,7 @@ public class UserController {
         this.tokenService = tokenService;
     }
 
+    @Operation(summary = "Registra um novo usuário", description = "Cria e salve um novo usuário em sistema")
     @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<RegisterResponseDTO> registerUser(@Valid @ModelAttribute
             @RequestParam("name") String name,
@@ -53,6 +57,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toRegisterResponse(savedUser));
     }
 
+    @Operation(summary = "Autentica um usuário", description = "Autentica um usuário a partir de email e senha")
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> loginUser(@Valid @RequestBody LoginRequestDTO loginRequest) {
 
@@ -67,6 +72,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDTO(token, user.getSurname()));
     }
 
+    @Operation(summary = "Busca usuário por email", description = "Retorna um usuário através de seu email")
     @GetMapping("/get")
     public ResponseEntity<User> getUser(@RequestParam String email) {
         User user = userService.getUserByEmail(email);
