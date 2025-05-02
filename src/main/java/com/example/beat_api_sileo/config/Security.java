@@ -48,6 +48,12 @@ public class Security {
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/user/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/user/login").permitAll()
+                        .requestMatchers(
+                                "/v3/api-docs/**", // Documentação OpenAPI
+                                "/swagger-ui/**",  // Recursos do Swagger UI
+                                "/swagger-ui.html" // Página principal do Swagger
+                        ).permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
