@@ -62,11 +62,11 @@ public class BeatController {
     }
 
 
-    /*@GetMapping("/by-genres")
+    @GetMapping("/by-genres")
     public ResponseEntity<List<Beat>> getBeatsByGenres(@RequestParam List<Long> genreIds) {
         List<Beat> beats = beatService.getBeatsByGenres(genreIds);
         return ResponseEntity.ok(beats);
-    }*/
+    }
 
     @DeleteMapping("/delete")
     public String deleteBeat() {
