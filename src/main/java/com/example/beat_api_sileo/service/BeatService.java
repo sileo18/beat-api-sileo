@@ -69,6 +69,10 @@ public class BeatService {
         return beat;
     }
 
+    public List<Beat> getMostRecent() {
+        return beatRepository.findMostRecent();
+    }
+
     public List<Beat> getBeatsByUserId(UUID userId) {
         return beatRepository.findByUserId(userId);
     }

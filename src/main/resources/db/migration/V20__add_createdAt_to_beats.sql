@@ -1,0 +1,7 @@
+ALTER TABLE beats ADD COLUMN created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE beats_genre DROP CONSTRAINT fk_beats_genre_beats;
+
+ALTER TABLE beats_genre
+ADD CONSTRAINT fk_beats_genre_beats
+FOREIGN KEY (beats_id) REFERENCES beats(id) ON DELETE CASCADE;

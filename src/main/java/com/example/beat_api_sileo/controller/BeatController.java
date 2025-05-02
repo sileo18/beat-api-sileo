@@ -54,6 +54,14 @@ public class BeatController {
     }
 
 
+    @GetMapping("/get/most-recent")
+    public ResponseEntity<List<Beat>> getMostRecent() {
+        List<Beat> mostRecentBeats = beatService.getMostRecent();
+
+        return ResponseEntity.ok(mostRecentBeats);
+    }
+
+
     /*@GetMapping("/by-genres")
     public ResponseEntity<List<Beat>> getBeatsByGenres(@RequestParam List<Long> genreIds) {
         List<Beat> beats = beatService.getBeatsByGenres(genreIds);
