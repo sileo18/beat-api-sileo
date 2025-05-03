@@ -5,6 +5,8 @@ import com.example.beat_api_sileo.domain.Api.LoginRequestDTO;
 import com.example.beat_api_sileo.domain.Api.LoginResponseDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterRequestDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
+import com.example.beat_api_sileo.domain.User.UpdateDescriptionRequestDTO;
+import com.example.beat_api_sileo.domain.User.UpdateDescriptionResponseDTO;
 import com.example.beat_api_sileo.domain.User.User;
 import com.example.beat_api_sileo.mapper.UserMapper;
 import com.example.beat_api_sileo.service.UserService;
@@ -79,5 +81,14 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @Operation(summary = "Atualiza informações do usuário", description = "Permite que o usuário atualize campos como descrição")
+    @PutMapping("/update/description")
+    public ResponseEntity<UpdateDescriptionResponseDTO> updateUser(@RequestBody @Valid UpdateDescriptionRequestDTO request) {
 
+        User user = userService.updateUserDescription(request);
+
+        UpdateDescriptionResponseDTO response = new UpdateDescriptionResponseDTO(user.getName(), user.getEmail(), user.getDescription());
+
+        return ResponseEntity.ok(response);
+    }
 }

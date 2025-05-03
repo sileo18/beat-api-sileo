@@ -80,11 +80,6 @@ public class BeatController {
 
     @Operation(summary = "Deletar beats", description = "Deleta o beat de acordo com seu Id")
     @DeleteMapping("/delete")
-    public String deleteBeat() {
-
-        return "Beat deleted successfully!";
-    }
-
     public ResponseEntity<Void> deleteBeat(@PathVariable UUID beatId) {
         try {
             beatRepository.deleteById(beatId);

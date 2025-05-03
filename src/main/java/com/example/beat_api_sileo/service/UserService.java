@@ -4,16 +4,22 @@ import com.example.beat_api_sileo.config.TokenService;
 
 import com.example.beat_api_sileo.domain.Api.RegisterRequestDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
+import com.example.beat_api_sileo.domain.User.UpdateDescriptionRequestDTO;
 import com.example.beat_api_sileo.domain.User.User;
 
 import com.example.beat_api_sileo.exceptions.EmailAlreadyExists;
 import com.example.beat_api_sileo.exceptions.UserNotFound;
 import com.example.beat_api_sileo.mapper.UserMapper;
 import com.example.beat_api_sileo.repositories.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -55,6 +61,16 @@ public class UserService {
         String token = tokenService.generateToken(user);
 
         return user;
+    }
+
+    public User updateUserDescription(UpdateDescriptionRequestDTO request) {
+
+        User user = (User) userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new UserNotFound("User not found"));
+
+        user.setDescription(request.description());
+
+        return userRepository.save(user);
     }
 
     public User getUserByEmail(String email) {
