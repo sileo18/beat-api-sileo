@@ -36,8 +36,7 @@ public class Beat {
     private int bpm;
 
     @ManyToOne
-    @JoinColumn(name = "key_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JoinColumn(name = "key_id", nullable = false)
     private Key key;
 
     @Column(name = "image_url")

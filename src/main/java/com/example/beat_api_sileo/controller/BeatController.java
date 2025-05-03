@@ -11,6 +11,7 @@ import com.example.beat_api_sileo.service.GenreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -82,6 +83,19 @@ public class BeatController {
     public String deleteBeat() {
 
         return "Beat deleted successfully!";
+    }
+
+    public ResponseEntity<Void> deleteBeat(@PathVariable UUID beatId) {
+        try {
+            beatRepository.deleteById(beatId);
+        }
+        catch (DataIntegrityViolationException ex) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
 

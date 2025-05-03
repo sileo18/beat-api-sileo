@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -84,6 +85,12 @@ public class BeatService {
 
     public List<Beat> getBeatsByBPMInterval(int minBPM, int maxBPM) {
         return beatRepository.findBeatsByBPMRange(minBPM, maxBPM);
+    }
+
+    public void deleteBeat(UUID beatId) {
+        Beat beat = beatRepository.findById(beatId).orElseThrow(() -> new UserNotFound("Beat não encontrado"));
+
+        beatRepository.delete(beat);
     }
 
     public List<Beat> getBeatsByGenres(List<Long> genreIds) {
