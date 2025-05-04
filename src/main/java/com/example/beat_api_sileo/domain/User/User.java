@@ -11,6 +11,8 @@
     import org.springframework.security.core.userdetails.UserDetails;
 
 
+    import java.time.LocalDate;
+    import java.time.LocalDateTime;
     import java.util.*;
 
 
@@ -43,10 +45,12 @@
 
         private String surname;
 
+        @Column(length = 255)
         private String description;
 
         @Column(name = "birthdate")
-        private Date birthDate;
+        @Temporal(TemporalType.DATE)
+        private LocalDate birthDate;
 
         @Column(name = "pictureurl")
         private String profilePictureUrl;
@@ -133,11 +137,11 @@
             this.description = description;
         }
 
-        public Date getBirthDate() {
+        public LocalDate getBirthDate() {
             return birthDate;
         }
 
-        public void setBirthDate(Date birthDate) {
+        public void setBirthDate(LocalDate birthDate) {
             this.birthDate = birthDate;
         }
 

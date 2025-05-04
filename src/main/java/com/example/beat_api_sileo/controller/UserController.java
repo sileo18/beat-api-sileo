@@ -5,6 +5,7 @@ import com.example.beat_api_sileo.domain.Api.LoginRequestDTO;
 import com.example.beat_api_sileo.domain.Api.LoginResponseDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterRequestDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
+import com.example.beat_api_sileo.domain.User.UpdateBirthDateRequestDTO;
 import com.example.beat_api_sileo.domain.User.UpdateDescriptionRequestDTO;
 import com.example.beat_api_sileo.domain.User.UpdateDescriptionResponseDTO;
 import com.example.beat_api_sileo.domain.User.User;
@@ -90,5 +91,12 @@ public class UserController {
         UpdateDescriptionResponseDTO response = new UpdateDescriptionResponseDTO(user.getName(), user.getEmail(), user.getDescription());
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Atualiza a data de nascimento do usuário", description = "Permite que o usuário atualize sua data de nascimento")
+    @PutMapping("/update/birthdate")
+    public ResponseEntity<String> updateBirthdate(@RequestBody UpdateBirthDateRequestDTO request) {
+        userService.updateUserBirth(request);
+        return ResponseEntity.ok("Birthdate updated successfully");
     }
 }

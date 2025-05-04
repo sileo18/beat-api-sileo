@@ -4,6 +4,7 @@ import com.example.beat_api_sileo.config.TokenService;
 
 import com.example.beat_api_sileo.domain.Api.RegisterRequestDTO;
 import com.example.beat_api_sileo.domain.Api.RegisterResponseDTO;
+import com.example.beat_api_sileo.domain.User.UpdateBirthDateRequestDTO;
 import com.example.beat_api_sileo.domain.User.UpdateDescriptionRequestDTO;
 import com.example.beat_api_sileo.domain.User.User;
 
@@ -71,6 +72,16 @@ public class UserService {
         user.setDescription(request.description());
 
         return userRepository.save(user);
+    }
+
+    public void updateUserBirth(UpdateBirthDateRequestDTO request) {
+
+        User user = (User) userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new UserNotFound("User not found"));
+
+        user.setBirthDate(request.birthdata());
+
+        userRepository.save(user);
     }
 
     public User getUserByEmail(String email) {
