@@ -99,4 +99,12 @@ public class UserController {
         userService.updateUserBirth(request);
         return ResponseEntity.ok("Birthdate updated successfully");
     }
+
+    @Operation(summary = "Busca o usuário", description = "Busca e retorna o usuários atráves do seu email")
+    @GetMapping("/get")
+    public ResponseEntity<User> getUserByEmail(@RequestBody String email) {
+        User user = userService.getUserByEmail(email);
+
+        return ResponseEntity.ok(user);
+    }
 }
